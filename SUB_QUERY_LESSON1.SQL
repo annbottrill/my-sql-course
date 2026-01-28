@@ -58,7 +58,9 @@ SELECT
 FROM
 	DimHospital h 
 WHERE h.Hospital IN (
-	SELECT DISTINCT ps.Hospital FROM PatientStay ps WHERE ps.Ward = 'Ophthalmology' AND ps.AdmittedDate = '2024-02-26'
+	SELECT DISTINCT ps.Hospital 
+	FROM PatientStay ps 
+	WHERE ps.Ward = 'Ophthalmology' AND ps.AdmittedDate = '2024-02-26'
 	);
  
 SELECT
@@ -102,27 +104,16 @@ i.e. those with the highest tariff
 */
 
 SELECT
-
 	SUM(Top10Patients.Tariff) AS Top10Tariff
-
 FROM
-
 	(
-
 	SELECT
-
 		TOP 10
-
          ps.PatientId
-
 		,ps.Tariff
-
 	FROM
-
 		PatientStay ps
-
 	ORDER BY
-
 		ps.Tariff DESC) Top10Patients;
  
 /*
@@ -132,22 +123,14 @@ Aside: Another way to do first example (scalar subquery) uses SQL variables
 */
 
 DECLARE @MaxTariff AS INT = (
-
-	SELECT MAX(ps2.Tariff) FROM PatientStay ps2
-
+SELECT MAX(ps2.Tariff) FROM PatientStay ps2
 	);
  
 SELECT 	@MaxTariff;
- 
 SELECT
-
 	*
-
 FROM
-
 	PatientStay ps
-
 WHERE
-
 	ps.Tariff = @MaxTariff;
  
